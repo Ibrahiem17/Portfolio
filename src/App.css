@@ -703,6 +703,10 @@ main {
   border: none;
   text-align: left;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Grid tracks default to a min-width based on content; without this a
+     wide-intrinsic-size image (e.g. the phone shots' `width: auto`) forces
+     its whole track past the container instead of scaling down into it. */
+  min-width: 0;
 }
 
 .shot:hover,
@@ -755,6 +759,27 @@ main {
   height: 100%;
   object-fit: cover;
   object-position: top center;
+}
+
+/* A phone screenshot sharing the browser grid — tall and letterboxed rather
+   than cropped, since portrait shots have nothing sensible to cut. */
+.shot--phone .shot__frame {
+  background: #0a0a10;
+}
+
+.shot--phone .shot__viewport {
+  aspect-ratio: 10 / 14;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.shot--phone .shot__viewport img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .shot__meta {

@@ -192,25 +192,133 @@ export const projects = [
   {
     id: 'dms',
     title: 'Driver Monitoring System',
-    subtitle: 'Real-time detection of unsafe driving',
+    subtitle: 'On-device AI that catches unsafe driving before it becomes an accident',
     accent: '#ffb457',
     meta: [
-      { label: 'Type', value: 'Final Year Project' },
-      { label: 'Focus', value: 'Computer Vision' },
+      { label: 'Type', value: 'Final Year Project · 3-person team' },
+      { label: 'Focus', value: 'Computer vision, Android, fleet dashboard' },
       { label: 'Year', value: '2025 — 2026' },
     ],
     summary:
-      'A real-time AI system that watches for unsafe driving behaviour — drowsiness, distraction, phone use — and reports incidents to a web dashboard built for fleet-level monitoring.',
+      'A driver-facing Android app plus a fleet dashboard, built to bring expensive dash-cam-grade safety monitoring down to hardware every driver already owns: a phone. The AI runs entirely on-device, watching for drowsiness, distraction, phone use, no seatbelt, and smoking — then reports every incident to a live web dashboard.',
     description: [
-      'The driver-facing half runs computer vision continuously, classifying behaviour as it happens rather than after the fact. The admin half turns those detections into something a fleet operator can act on: incident records, per-driver history, and an overview of the whole fleet.',
+      'The phone sits on the dashboard facing the driver, checks their face matches who logged in, then continuously classifies behaviour from the front camera — no internet required for the watching itself. Google ML Kit tracks eye closure and head angle frame by frame; a second model spots objects like a phone or a lit cigarette. Nothing is graded from a single frame: PERCLOS (percentage of recent time eyes were closed) and multi-frame object voting exist specifically to keep single-blink or single-glance false positives out.',
+      'Severity is a function of duration, not appearance — 0.5 seconds of closed eyes is a blink, 3.5+ seconds is graded Critical. The moment something crosses that line, the driver gets an immediate on-screen and audio alert, a photo is captured as proof, and the incident queues for upload. If there is no signal, nothing is lost: violations write to a local queue first and a background worker keeps retrying until they land — the app was built offline-first from day one, not patched to tolerate it.',
+      'On the fleet side, every incident lands on a manager dashboard in close to real time: per-driver safety scores, a live violation feed, photo evidence, and company-configurable severity thresholds and penalty weights — a Critical drowsiness event can be scored differently from a Critical smoking event, because a fleet operator should get to decide that, not the codebase.',
     ],
-    tags: ['Computer Vision', 'AI', 'Dashboard'],
+    stats: [
+      { value: '5', label: 'behaviours detected' },
+      { value: '2', label: 'on-device AI models' },
+      { value: '4', label: 'severity levels' },
+      { value: '0', label: 'signal required to detect' },
+    ],
+    tags: ['Kotlin', 'Android', 'ML Kit', 'Computer Vision', 'Firebase', 'React', 'Node.js'],
+    device: 'phone',
     links: { repo: '', demo: '' },
+    screens: [
+      {
+        src: '/projects/dms/01-face-verify.jpg',
+        label: 'Face verification',
+        caption: 'A 512-number face embedding gates every session before monitoring starts',
+      },
+      {
+        src: '/projects/dms/02-driver-home.jpg',
+        label: 'Driver home',
+        caption: 'Live session stats — violations, elapsed time, running performance score',
+      },
+      {
+        src: '/projects/dms/03-alert-critical.jpg',
+        label: 'Critical alert',
+        caption: 'Full-screen, high-contrast warning the instant a behaviour crosses threshold',
+      },
+      {
+        src: '/projects/dms/04-violations.jpg',
+        label: 'Violation log',
+        caption: "Every incident timestamped and graded on the driver's own device",
+      },
+      {
+        src: '/projects/dms/05-dashboard.png',
+        label: 'Fleet dashboard',
+        caption: 'Live violation feed, safety-score trend, and fleet-wide breakdown by type',
+        device: 'browser',
+      },
+      {
+        src: '/projects/dms/06-driver-detail.png',
+        label: 'Driver detail',
+        caption: 'Per-driver safety-score history, live location, and full violation record',
+        device: 'browser',
+      },
+      {
+        src: '/projects/dms/07-severity-info.png',
+        label: 'Severity thresholds',
+        caption: 'The exact duration bands — Low through Critical — behind every grade',
+        device: 'browser',
+      },
+      {
+        src: '/projects/dms/08-penalty-settings.png',
+        label: 'Configurable penalties',
+        caption: 'Score deduction per violation type and severity, set by the fleet operator',
+        device: 'browser',
+      },
+    ],
+    flow: [
+      {
+        title: 'Verify',
+        detail:
+          'The driver logs in, then the camera confirms their face matches — cosine similarity against a saved embedding — before a session can start.',
+      },
+      {
+        title: 'Watch',
+        detail:
+          'ML Kit tracks eye closure and head angle continuously on-device; a second model watches for phones, seatbelts, and cigarettes across recent frames.',
+      },
+      {
+        title: 'Grade',
+        detail:
+          'Sustained behaviour, not a single frame, sets severity — Low to Critical, purely a function of how long it lasted.',
+      },
+      {
+        title: 'Alert & queue',
+        detail:
+          'The driver is warned immediately with a photo captured as proof; the report queues locally and uploads the moment there is signal.',
+      },
+      {
+        title: 'Review',
+        detail:
+          'The fleet dashboard updates near-instantly with the incident, photo, and its effect on that driver’s safety score.',
+      },
+    ],
+    stack: [
+      { group: 'Android', items: ['Kotlin', 'CameraX', 'WorkManager'] },
+      { group: 'On-device AI', items: ['Google ML Kit', 'TFLite object detection'] },
+      { group: 'Backend', items: ['Node.js', 'SQLite', 'Firebase Auth', 'Firestore', 'Cloudinary'] },
+      { group: 'Dashboard', items: ['React'] },
+    ],
     features: [
-      { title: 'Drowsiness detection', detail: 'Flags fatigue signals from the live camera feed.' },
-      { title: 'Distraction & phone use', detail: 'Catches attention leaving the road, including handset use.' },
-      { title: 'Incident reporting', detail: 'Each detection is recorded as a reviewable incident.' },
-      { title: 'Fleet dashboard', detail: 'Web-based admin view for monitoring drivers across a fleet.' },
+      {
+        title: 'Fully on-device detection',
+        detail: 'Drowsiness, distraction, and object detection all run on the phone — no connection needed to watch, only to report.',
+      },
+      {
+        title: 'Face-verified sessions',
+        detail: 'A 512-dimension embedding, compared by cosine similarity, confirms the right driver before monitoring begins.',
+      },
+      {
+        title: 'Duration-based severity',
+        detail: 'PERCLOS and multi-frame voting mean a single blink or glance never triggers a false alarm.',
+      },
+      {
+        title: 'Offline-first by design',
+        detail: 'Violations queue locally and retry automatically — a lost signal never loses an incident.',
+      },
+      {
+        title: 'Configurable fleet policy',
+        detail: 'Severity thresholds and score penalties per violation type are set by the operator, not hard-coded.',
+      },
+      {
+        title: 'Live fleet dashboard',
+        detail: 'Per-driver history, photo evidence, and safety scores, synced from the phone in close to real time.',
+      },
     ],
   },
 

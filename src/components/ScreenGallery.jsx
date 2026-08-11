@@ -62,6 +62,30 @@ function BrowserShot({ screen, onClick, index }) {
   );
 }
 
+// A phone screenshot rendered as a grid card rather than fanned — used when a
+// project mixes phone and browser screens, so both sit in the same layout.
+function GridPhone({ screen, onClick, index }) {
+  return (
+    <motion.button
+      type="button"
+      className="shot shot--phone"
+      onClick={onClick}
+      {...reveal(index)}
+      aria-label={`View ${screen.label} screenshot`}
+    >
+      <span className="shot__frame">
+        <span className="shot__viewport">
+          <img src={asset(screen.src)} alt={screen.label} loading="lazy" />
+        </span>
+      </span>
+      <span className="shot__meta">
+        <span className="shot__label">{screen.label}</span>
+        <span className="shot__caption">{screen.caption}</span>
+      </span>
+    </motion.button>
+  );
+}
+
 export default function ScreenGallery({ screens, device = 'phone' }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const isOpen = activeIndex !== null;
@@ -111,24 +135,37 @@ export default function ScreenGallery({ screens, device = 'phone' }) {
   }, [isOpen, close, step]);
 
   const active = isOpen ? screens[activeIndex] : null;
-  const isBrowser = device === 'browser';
-  const Item = isBrowser ? BrowserShot : Phone;
+
+  // Most projects are one device throughout — resolve each screen's type
+  // (its own `device` wins, falling back to the gallery default) and only
+  // fall out of the classic single-device layouts when that varies.
+  const resolvedTypes = screens.map((s) => s.device || device);
+  const isMixed = new Set(resolvedTypes).size > 1;
+  const isBrowser = !isMixed && device === 'browser';
+  const layout = isMixed ? 'browser' : device;
+  const activeType = isOpen ? resolvedTypes[activeIndex] : device;
 
   return (
     <>
-      <div
-        className={`shots shots--${device}`}
-        style={{ '--count': screens.length }}
-      >
-        {screens.map((screen, i) => (
-          <Item
-            key={screen.src}
-            screen={screen}
-            index={i}
-            total={screens.length}
-            onClick={() => setActiveIndex(i)}
-          />
-        ))}
+      <div className={`shots shots--${layout}`} style={{ '--count': screens.length }}>
+        {screens.map((screen, i) => {
+          const Item = isMixed
+            ? resolvedTypes[i] === 'browser'
+              ? BrowserShot
+              : GridPhone
+            : isBrowser
+              ? BrowserShot
+              : Phone;
+          return (
+            <Item
+              key={screen.src}
+              screen={screen}
+              index={i}
+              total={screens.length}
+              onClick={() => setActiveIndex(i)}
+            />
+          );
+        })}
       </div>
 
       {isOpen && (
@@ -148,7 +185,7 @@ export default function ScreenGallery({ screens, device = 'phone' }) {
           </button>
 
           <figure
-            className={`lightbox__figure lightbox__figure--${device}`}
+            className={`lightbox__figure lightbox__figure--${activeType}`}
             onClick={(e) => e.stopPropagation()}
           >
             <img src={asset(active.src)} alt={active.label} />
