@@ -310,37 +310,46 @@ export const projects = [
         caption: 'Wallet connection and live devnet status',
       },
       {
-        src: '/projects/freelancepay/02-how-it-works.jpg',
-        label: 'Escrow flow',
-        caption: 'Lock SOL → deliver work → get paid',
+        src: '/projects/freelancepay/02-escrow-create.jpg',
+        label: 'Creating an escrow',
+        caption: 'Client names a wallet and amount; SOL moves into a PDA vault',
       },
       {
-        src: '/projects/freelancepay/03-jobs.jpg',
+        src: '/projects/freelancepay/03-escrow-lifecycle.jpg',
+        label: 'Escrow lifecycle',
+        caption: 'Create → submit → approve, with cancel as the escape hatch',
+      },
+      {
+        src: '/projects/freelancepay/04-jobs.jpg',
         label: 'Job board',
         caption: 'Filter open jobs by skill, budget, and recency',
       },
       {
-        src: '/projects/freelancepay/04-y2k-theme.jpg',
+        src: '/projects/freelancepay/05-y2k-theme.jpg',
         label: 'Y2K Glass theme',
         caption: 'A second skin, switchable at runtime',
       },
     ],
     flow: [
       {
-        title: 'Lock SOL',
-        detail: 'The client creates an escrow and locks SOL in the contract. Funds release only on approval.',
+        title: 'Create escrow',
+        detail:
+          'The client enters the freelancer’s wallet address and the agreed amount. The SOL moves into a Program Derived Account — a vault only the contract can open.',
       },
       {
-        title: 'Deliver work',
-        detail: 'The freelancer submits proof of delivery on-chain, with the file itself stored on IPFS.',
+        title: 'Submit work',
+        detail:
+          'The freelancer calls submit_work, recording the delivery note permanently on-chain. Escrow status moves Active → Submitted.',
       },
       {
-        title: 'Revise',
-        detail: 'The client can request changes without either side losing custody of the locked funds.',
+        title: 'Approve',
+        detail:
+          'The client calls approve_work. The contract closes the escrow and transfers the full balance to the freelancer in the same transaction.',
       },
       {
-        title: 'Get paid',
-        detail: 'On approval, SOL transfers straight to the freelancer’s wallet — no bank, no platform cut.',
+        title: 'Or cancel',
+        detail:
+          'While the escrow is still Active, the client can call cancel_escrow for a full refund — the escape hatch if work never starts.',
       },
     ],
     stack: [
@@ -349,8 +358,9 @@ export const projects = [
       { group: 'Storage & tests', items: ['IPFS', 'LiteSVM'] },
     ],
     features: [
+      { title: 'PDA-held funds', detail: 'SOL sits in a program-derived vault — neither party can touch it mid-contract.' },
       { title: 'Escrow state machine', detail: 'Five instructions move a job from funded through to released.' },
-      { title: 'Client revision loop', detail: 'Changes can be requested without releasing or reclaiming funds early.' },
+      { title: 'Cancel and refund', detail: 'If work never starts, the client reclaims the full amount on-chain.' },
       { title: 'IPFS deliverables', detail: 'Work is uploaded and referenced on-chain rather than stored on it.' },
       { title: 'Marketplace & job board', detail: 'Browse freelancers or filter open jobs by skill, budget, and recency.' },
       { title: 'Practice Mode', detail: 'Run the full flow on devnet before switching to real money.' },
