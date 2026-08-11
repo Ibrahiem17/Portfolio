@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { profile } from '../data/portfolioData';
+import { asset } from '../lib/asset';
 
 // Three.js is heavy — keep it out of the initial bundle so text paints first.
 const Scene3D = lazy(() => import('./Scene3D'));
@@ -52,7 +53,7 @@ export default function Hero() {
           </a>
           {profile.resumeUrl && (
             <a
-              href={profile.resumeUrl}
+              href={asset(profile.resumeUrl)}
               className="btn btn--ghost"
               download={profile.resumeFileName || true}
             >

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { profile, socials } from '../data/portfolioData';
+import { asset } from '../lib/asset';
 
 export default function Contact() {
   return (
@@ -32,7 +33,7 @@ export default function Contact() {
           {profile.resumeUrl && (
             <a
               className="social-link"
-              href={profile.resumeUrl}
+              href={asset(profile.resumeUrl)}
               download={profile.resumeFileName || true}
             >
               Download CV ↓

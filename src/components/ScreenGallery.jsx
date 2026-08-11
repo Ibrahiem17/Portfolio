@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { asset } from '../lib/asset';
 
 const reveal = (index) => ({
   initial: { opacity: 0, y: 40 },
@@ -24,7 +25,7 @@ function Phone({ screen, onClick, index, total }) {
     >
       <span className="phone__frame">
         <span className="phone__notch" />
-        <img src={screen.src} alt={screen.label} loading="lazy" />
+        <img src={asset(screen.src)} alt={screen.label} loading="lazy" />
       </span>
       <span className="phone__meta">
         <span className="phone__label">{screen.label}</span>
@@ -50,7 +51,7 @@ function BrowserShot({ screen, onClick, index }) {
           <i />
         </span>
         <span className="shot__viewport">
-          <img src={screen.src} alt={screen.label} loading="lazy" />
+          <img src={asset(screen.src)} alt={screen.label} loading="lazy" />
         </span>
       </span>
       <span className="shot__meta">
@@ -150,7 +151,7 @@ export default function ScreenGallery({ screens, device = 'phone' }) {
             className={`lightbox__figure lightbox__figure--${device}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <img src={active.src} alt={active.label} />
+            <img src={asset(active.src)} alt={active.label} />
             <figcaption>
               <strong>{active.label}</strong>
               <span>{active.caption}</span>
