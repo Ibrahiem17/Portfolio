@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import PhoneGallery from './PhoneGallery';
+import ScreenGallery from './ScreenGallery';
 import { projects } from '../data/portfolioData';
 
 function Panel({ project }) {
@@ -23,7 +23,9 @@ function Panel({ project }) {
         </p>
       ))}
 
-      {project.screens && <PhoneGallery screens={project.screens} />}
+      {project.screens && (
+        <ScreenGallery screens={project.screens} device={project.device} />
+      )}
 
       {project.stats && (
         <div className={`case__stats case__stats--${project.stats.length}`}>

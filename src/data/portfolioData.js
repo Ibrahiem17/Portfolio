@@ -6,9 +6,9 @@ export const profile = {
   tagline: 'Full-stack, DevOps, and mobile — I build things and actually ship them.',
   location: 'Lahore, Pakistan',
   email: 'Ibrahiem6161@gmail.com',
-  // Drop a PDF at public/resume.pdf and set this to '/resume.pdf' to show the
-  // résumé button. Left empty so the PDF stays out of the public repo.
-  resumeUrl: '',
+  // Served from public/. Set to '' to hide the download button entirely.
+  resumeUrl: '/resume.pdf',
+  resumeFileName: 'Muhammad-Ibrahiem-CV.pdf',
   avatarInitials: 'MI',
 };
 
@@ -286,25 +286,74 @@ export const projects = [
       { label: 'Chain', value: 'Solana' },
     ],
     summary:
-      'An on-chain escrow that lets a client and a freelancer transact without trusting each other. Five instructions drive a state machine covering funding, delivery, revisions, and release.',
+      'A full freelance marketplace where payment is held by a Solana smart contract instead of a platform. SOL is locked on job creation and released only on approval — zero platform fees, no middleman, live on devnet.',
     description: [
       'The design problem was the revision loop — real freelance work rarely lands right the first time, so the state machine had to let a client request changes without either side losing custody of the funds.',
+      'Around the contract sits a complete product: a freelancer marketplace, a filterable job board, Phantom wallet connection, and a Practice Mode that lets people try the whole flow before committing real SOL.',
     ],
     stats: [
       { value: '5', label: 'on-chain instructions' },
       { value: '6', label: 'LiteSVM integration tests' },
+      { value: '0%', label: 'platform fees' },
+      { value: '<2s', label: 'payment settlement' },
     ],
     tags: ['Solana', 'Rust', 'Anchor', 'Next.js', 'IPFS'],
-    links: { repo: 'https://github.com/Ibrahiem17/freelancepay', demo: '' },
+    device: 'browser',
+    links: {
+      repo: 'https://github.com/Ibrahiem17/freelancepay',
+      demo: 'https://freelancepay-roan.vercel.app/',
+    },
+    screens: [
+      {
+        src: '/projects/freelancepay/01-home.jpg',
+        label: 'Landing',
+        caption: 'Wallet connection and live devnet status',
+      },
+      {
+        src: '/projects/freelancepay/02-how-it-works.jpg',
+        label: 'Escrow flow',
+        caption: 'Lock SOL → deliver work → get paid',
+      },
+      {
+        src: '/projects/freelancepay/03-jobs.jpg',
+        label: 'Job board',
+        caption: 'Filter open jobs by skill, budget, and recency',
+      },
+      {
+        src: '/projects/freelancepay/04-y2k-theme.jpg',
+        label: 'Y2K Glass theme',
+        caption: 'A second skin, switchable at runtime',
+      },
+    ],
+    flow: [
+      {
+        title: 'Lock SOL',
+        detail: 'The client creates an escrow and locks SOL in the contract. Funds release only on approval.',
+      },
+      {
+        title: 'Deliver work',
+        detail: 'The freelancer submits proof of delivery on-chain, with the file itself stored on IPFS.',
+      },
+      {
+        title: 'Revise',
+        detail: 'The client can request changes without either side losing custody of the locked funds.',
+      },
+      {
+        title: 'Get paid',
+        detail: 'On approval, SOL transfers straight to the freelancer’s wallet — no bank, no platform cut.',
+      },
+    ],
     stack: [
       { group: 'On-chain', items: ['Rust', 'Anchor', 'Solana'] },
-      { group: 'Client', items: ['Next.js'] },
+      { group: 'Client', items: ['Next.js', 'Phantom Wallet'] },
       { group: 'Storage & tests', items: ['IPFS', 'LiteSVM'] },
     ],
     features: [
       { title: 'Escrow state machine', detail: 'Five instructions move a job from funded through to released.' },
       { title: 'Client revision loop', detail: 'Changes can be requested without releasing or reclaiming funds early.' },
       { title: 'IPFS deliverables', detail: 'Work is uploaded and referenced on-chain rather than stored on it.' },
+      { title: 'Marketplace & job board', detail: 'Browse freelancers or filter open jobs by skill, budget, and recency.' },
+      { title: 'Practice Mode', detail: 'Run the full flow on devnet before switching to real money.' },
       { title: 'Integration tested', detail: 'Six LiteSVM tests cover the escrow paths end to end.' },
     ],
   },

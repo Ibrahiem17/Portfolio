@@ -51,8 +51,12 @@ export default function Hero() {
             let's talk
           </a>
           {profile.resumeUrl && (
-            <a href={profile.resumeUrl} className="btn btn--ghost" target="_blank" rel="noreferrer">
-              resume ↓
+            <a
+              href={profile.resumeUrl}
+              className="btn btn--ghost"
+              download={profile.resumeFileName || true}
+            >
+              download CV ↓
             </a>
           )}
         </div>

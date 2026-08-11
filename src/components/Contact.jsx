@@ -29,6 +29,15 @@ export default function Contact() {
               {s.label}
             </a>
           ))}
+          {profile.resumeUrl && (
+            <a
+              className="social-link"
+              href={profile.resumeUrl}
+              download={profile.resumeFileName || true}
+            >
+              Download CV ↓
+            </a>
+          )}
         </div>
       </motion.div>
 

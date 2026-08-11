@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
+const reveal = (index) => ({
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.5, delay: index * 0.07 },
+});
+
 function Phone({ screen, onClick, index, total }) {
   // Fan the devices out from the centre: outer phones tilt further away.
   const mid = (total - 1) / 2;
@@ -12,10 +19,7 @@ function Phone({ screen, onClick, index, total }) {
       className="phone"
       onClick={onClick}
       style={{ '--fan': offset }}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
+      {...reveal(index)}
       aria-label={`View ${screen.label} screenshot`}
     >
       <span className="phone__frame">
@@ -30,7 +34,34 @@ function Phone({ screen, onClick, index, total }) {
   );
 }
 
-export default function PhoneGallery({ screens }) {
+function BrowserShot({ screen, onClick, index }) {
+  return (
+    <motion.button
+      type="button"
+      className="shot"
+      onClick={onClick}
+      {...reveal(index)}
+      aria-label={`View ${screen.label} screenshot`}
+    >
+      <span className="shot__frame">
+        <span className="shot__bar">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="shot__viewport">
+          <img src={screen.src} alt={screen.label} loading="lazy" />
+        </span>
+      </span>
+      <span className="shot__meta">
+        <span className="shot__label">{screen.label}</span>
+        <span className="shot__caption">{screen.caption}</span>
+      </span>
+    </motion.button>
+  );
+}
+
+export default function ScreenGallery({ screens, device = 'phone' }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const isOpen = activeIndex !== null;
   const closeRef = useRef(null);
@@ -79,12 +110,17 @@ export default function PhoneGallery({ screens }) {
   }, [isOpen, close, step]);
 
   const active = isOpen ? screens[activeIndex] : null;
+  const isBrowser = device === 'browser';
+  const Item = isBrowser ? BrowserShot : Phone;
 
   return (
     <>
-      <div className="phones" style={{ '--count': screens.length }}>
+      <div
+        className={`shots shots--${device}`}
+        style={{ '--count': screens.length }}
+      >
         {screens.map((screen, i) => (
-          <Phone
+          <Item
             key={screen.src}
             screen={screen}
             index={i}
@@ -110,7 +146,10 @@ export default function PhoneGallery({ screens }) {
             ‹
           </button>
 
-          <figure className="lightbox__figure" onClick={(e) => e.stopPropagation()}>
+          <figure
+            className={`lightbox__figure lightbox__figure--${device}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <img src={active.src} alt={active.label} />
             <figcaption>
               <strong>{active.label}</strong>

@@ -45,7 +45,9 @@ Every other field is optional and its section is skipped when absent:
 
 - `meta` — the label/value row
 - `description` — body paragraphs
-- `screens` — screenshots, rendered in phone frames with a lightbox
+- `screens` — screenshots, rendered in device frames with a lightbox
+- `device` — `'phone'` (default, fanned phone frames) or `'browser'`
+  (a grid of browser windows, for web projects)
 - `stats` — the big-number row
 - `flow` — a numbered "how it works" sequence
 - `stack` — grouped technology chips
