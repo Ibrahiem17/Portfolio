@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import ScreenGallery from './ScreenGallery';
 import { projects } from '../data/portfolioData';
+import { asset } from '../lib/asset';
 
 function Panel({ project }) {
   return (
     <div className="proj__inner">
+      {project.banner && (
+        <img className="proj__banner" src={asset(project.banner)} alt={`${project.title} banner`} loading="lazy" />
+      )}
+
       {project.meta && (
         <dl className="case__meta">
           {project.meta.map((m) => (
@@ -122,6 +127,10 @@ function ProjectCard({ project, position, isOpen, onToggle }) {
     >
       <button className="proj__head" onClick={onToggle} aria-expanded={isOpen} aria-controls={panelId}>
         <span className="proj__num">{position}</span>
+
+        {project.icon && (
+          <img className="proj__icon" src={asset(project.icon)} alt="" aria-hidden="true" loading="lazy" />
+        )}
 
         <span className="proj__titles">
           <h3>{project.title}</h3>

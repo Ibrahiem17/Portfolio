@@ -403,6 +403,15 @@ main {
   flex-shrink: 0;
 }
 
+.proj__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+
 .proj__titles {
   display: flex;
   flex-direction: column;
@@ -478,6 +487,17 @@ main {
 
 .proj__inner {
   padding-top: 28px;
+}
+
+.proj__banner {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 1024 / 500;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
 }
 
 .proj__para {

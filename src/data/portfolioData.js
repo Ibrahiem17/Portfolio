@@ -81,11 +81,41 @@ export const skills = [
 
 export const projects = [
   {
+    id: 'alphacrm',
+    title: 'AlphaCRM',
+    subtitle: 'Full-stack CRM with a complete DevOps pipeline',
+    accent: '#38f7ff',
+    meta: [
+      { label: 'Type', value: 'Full-stack web app' },
+      { label: 'Role', value: 'Solo build' },
+      { label: 'Stack', value: 'React · Node · SQL' },
+    ],
+    summary:
+      'A customer-relationship manager covering the full lifecycle — records, sales pipeline, and role-based access — wrapped in a containerised CI/CD pipeline that cut deployment overhead by roughly 60%.',
+    description: [
+      'The interesting part was less the CRUD and more the delivery path around it: Docker for reproducible environments and GitHub Actions to take a merge straight through to a deployed build without manual steps.',
+    ],
+    stats: [{ value: '~60%', label: 'less deployment overhead' }],
+    tags: ['React', 'Node.js', 'SQL', 'Docker', 'GitHub Actions'],
+    links: { repo: 'https://github.com/Ibrahiem17/alphacrm', demo: '' },
+    stack: [
+      { group: 'Frontend', items: ['React'] },
+      { group: 'Backend', items: ['Node.js', 'SQL'] },
+      { group: 'DevOps', items: ['Docker', 'GitHub Actions', 'CI/CD'] },
+    ],
+    features: [
+      { title: 'Full CRUD', detail: 'Create, read, update, and delete across customer records.' },
+      { title: 'Pipeline tracking', detail: 'Deals move through stages with their status visible throughout.' },
+      { title: 'Role-based access', detail: 'Permissions scoped to what each role is allowed to see and do.' },
+      { title: 'Automated delivery', detail: 'Docker plus GitHub Actions CI/CD removed most manual deploy work.' },
+    ],
+  },
+
+  {
     id: 'hireready',
     title: 'HireReady',
     subtitle: 'AI-Powered Interview Preparation Platform',
     accent: '#b6f36a',
-    defaultOpen: true,
     meta: [
       { label: 'Platform', value: 'Android · Java' },
       { label: 'Role', value: 'Solo — design & build' },
@@ -323,41 +353,12 @@ export const projects = [
   },
 
   {
-    id: 'alphacrm',
-    title: 'AlphaCRM',
-    subtitle: 'Full-stack CRM with a complete DevOps pipeline',
-    accent: '#38f7ff',
-    meta: [
-      { label: 'Type', value: 'Full-stack web app' },
-      { label: 'Role', value: 'Solo build' },
-      { label: 'Stack', value: 'React · Node · SQL' },
-    ],
-    summary:
-      'A customer-relationship manager covering the full lifecycle — records, sales pipeline, and role-based access — wrapped in a containerised CI/CD pipeline that cut deployment overhead by roughly 60%.',
-    description: [
-      'The interesting part was less the CRUD and more the delivery path around it: Docker for reproducible environments and GitHub Actions to take a merge straight through to a deployed build without manual steps.',
-    ],
-    stats: [{ value: '~60%', label: 'less deployment overhead' }],
-    tags: ['React', 'Node.js', 'SQL', 'Docker', 'GitHub Actions'],
-    links: { repo: 'https://github.com/Ibrahiem17/alphacrm', demo: '' },
-    stack: [
-      { group: 'Frontend', items: ['React'] },
-      { group: 'Backend', items: ['Node.js', 'SQL'] },
-      { group: 'DevOps', items: ['Docker', 'GitHub Actions', 'CI/CD'] },
-    ],
-    features: [
-      { title: 'Full CRUD', detail: 'Create, read, update, and delete across customer records.' },
-      { title: 'Pipeline tracking', detail: 'Deals move through stages with their status visible throughout.' },
-      { title: 'Role-based access', detail: 'Permissions scoped to what each role is allowed to see and do.' },
-      { title: 'Automated delivery', detail: 'Docker plus GitHub Actions CI/CD removed most manual deploy work.' },
-    ],
-  },
-
-  {
     id: 'dr-ibo',
     title: 'Dr. Ibo Brain Training',
     subtitle: 'Published brain-training game',
     accent: '#ff7ad9',
+    icon: '/projects/dr-ibo/app-icon-512.png',
+    banner: '/projects/dr-ibo/feature-graphic-1024x500.png',
     meta: [
       { label: 'Platform', value: 'Android · Play Store' },
       { label: 'Built with', value: 'React Native (Expo)' },
@@ -374,6 +375,28 @@ export const projects = [
     ],
     tags: ['React Native', 'Expo', 'EAS Build', 'Game Dev'],
     links: { repo: 'https://github.com/Ibrahiem17/Dr.-Ibo-Brain-Training', demo: '' },
+    screens: [
+      {
+        src: '/projects/dr-ibo/screenshot-1-onboarding.png',
+        label: 'Onboarding',
+        caption: 'Name and colour picked once, then never asked again',
+      },
+      {
+        src: '/projects/dr-ibo/screenshot-2-home.png',
+        label: 'Brain Battle',
+        caption: 'Full Battle, Solo, or Quick Play — one phone, up to two players',
+      },
+      {
+        src: '/projects/dr-ibo/screenshot-3-gameplay.png',
+        label: 'Mental Math',
+        caption: 'One of seven mini-games, each timed and scored independently',
+      },
+      {
+        src: '/projects/dr-ibo/screenshot-4-results.png',
+        label: 'Results',
+        caption: 'Score converts to a Brain Age, with streaks to bring players back',
+      },
+    ],
     stack: [{ group: 'Mobile', items: ['React Native', 'Expo', 'EAS Build'] }],
     features: [
       { title: 'Seven mini-games', detail: 'Each targets a different cognitive skill.' },
