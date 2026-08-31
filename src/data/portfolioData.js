@@ -16,7 +16,7 @@ export const about = {
   heading: 'who am i',
   paragraphs: [
     'Computer Science graduate from UMT Lahore, building across the stack — React and Node on the web, React Native and Java on mobile, Docker and GitHub Actions holding it all together.',
-    'I like work that reaches real users: a brain-training game live on the Play Store, a CRM that cut deployment overhead by ~60%, an on-chain escrow built in a hackathon weekend. Shipping beats theorising.',
+    'I like work that reaches real users: a cognitive-training game built end to end, a CRM that cut deployment overhead by ~60%, an on-chain escrow built in a hackathon weekend. Shipping beats theorising.',
   ],
 };
 
@@ -355,24 +355,20 @@ export const projects = [
   {
     id: 'dr-ibo',
     title: 'Dr. Ibo Brain Training',
-    subtitle: 'Published brain-training game',
+    subtitle: 'Cognitive-training game built with React Native',
     accent: '#ff7ad9',
     icon: '/projects/dr-ibo/app-icon-512.png',
     banner: '/projects/dr-ibo/feature-graphic-1024x500.png',
     meta: [
-      { label: 'Platform', value: 'Android · Play Store' },
+      { label: 'Platform', value: 'Android' },
       { label: 'Built with', value: 'React Native (Expo)' },
-      { label: 'Status', value: 'Live' },
     ],
     summary:
-      'A cognitive-training game shipped to the Google Play Store: seven mini-games, boss battles, and a coin economy tying the progression together.',
+      'A cognitive-training game with seven mini-games, boss battles, and a coin economy tying the progression together.',
     description: [
-      'This one went the whole distance — not a prototype but a real release, built with Expo and shipped through EAS Build to a live store listing.',
+      'Built with Expo and shipped through EAS Build, with a full onboarding flow, a scored results screen, and a Brain Battle mode for two players sharing one phone.',
     ],
-    stats: [
-      { value: '7', label: 'cognitive mini-games' },
-      { value: 'Live', label: 'on Google Play' },
-    ],
+    stats: [{ value: '7', label: 'cognitive mini-games' }],
     tags: ['React Native', 'Expo', 'EAS Build', 'Game Dev'],
     links: { repo: 'https://github.com/Ibrahiem17/Dr.-Ibo-Brain-Training', demo: '' },
     screens: [
@@ -402,7 +398,7 @@ export const projects = [
       { title: 'Seven mini-games', detail: 'Each targets a different cognitive skill.' },
       { title: 'Boss battles', detail: 'Longer challenge runs that raise the difficulty.' },
       { title: 'Coin economy', detail: 'Rewards tie progression across the whole game together.' },
-      { title: 'Shipped to production', detail: 'Built and released via EAS Build to the Play Store.' },
+      { title: 'Production build pipeline', detail: 'Built and packaged for release via EAS Build.' },
     ],
   },
 

@@ -792,12 +792,15 @@ main {
 }
 
 .shot--phone .shot__viewport {
-  aspect-ratio: 10 / 14;
+  /* Match real phone-screenshot proportions (~0.45–0.48 across the DMS
+     set) — a wider box here just letterboxes the image with dead space
+     on both sides. */
+  aspect-ratio: 47 / 100;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 16px;
+  padding: 10px;
 }
 
 .shot--phone .shot__viewport img {
